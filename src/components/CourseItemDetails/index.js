@@ -87,7 +87,9 @@ class CourseItemDetails extends Component {
       <FailureViewDescription>
         We cannot seem to find the page you are looking for .
       </FailureViewDescription>
-      <RetryBtn>Retry</RetryBtn>
+      <RetryBtn type="button" onClick={this.onClickRetryBtn}>
+        Retry
+      </RetryBtn>
     </FailureViewContainer>
   )
 

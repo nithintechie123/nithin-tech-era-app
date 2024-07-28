@@ -55,6 +55,10 @@ class Home extends Component {
     }
   }
 
+  onClickRetryBtn = () => {
+    this.getCoursesData()
+  }
+
   renderLoader = () => (
     <LoaderContainer data-testid="loader">
       <Loader type="ThreeDots" color="#00BFFF" height={50} width={50} />
@@ -71,7 +75,9 @@ class Home extends Component {
       <FailureViewDescription>
         We cannot seem to find the page you are looking for .
       </FailureViewDescription>
-      <RetryBtn>Retry</RetryBtn>
+      <RetryBtn type="button" onClick={this.onClickRetryBtn}>
+        Retry
+      </RetryBtn>
     </FailureViewContainer>
   )
 

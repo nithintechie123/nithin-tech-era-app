@@ -124,6 +124,7 @@ export const RetryBtn = styled.button`
   width: 80px;
   border-width: 0px;
   font-weight: 500;
+  cursor: pointer;
 `
 
 export const NotFoundImageElement = styled.img`
