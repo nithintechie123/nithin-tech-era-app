@@ -1,21 +1,8 @@
 import {Component} from 'react'
 
-import Loader from 'react-loader-spinner'
+import './index.css'
 
-import {
-  DetailedCourseContainer,
-  CourseItemDetailsContainer,
-  CourseImageElement,
-  NameDescriptionContainer,
-  CourseName,
-  Description,
-  LoaderContainer,
-  FailureViewContainer,
-  FailureImageElement,
-  FailureViewHeading,
-  FailureViewDescription,
-  RetryBtn,
-} from '../../styledComponents'
+import Loader from 'react-loader-spinner'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -28,6 +15,10 @@ class CourseItemDetails extends Component {
   state = {courseDetailsList: [], apiStatus: apiStatusConstants.initial}
 
   componentDidMount() {
+    this.getCourseDetailsData()
+  }
+
+  onClickRetryBtn = () => {
     this.getCourseDetailsData()
   }
 
@@ -67,36 +58,41 @@ class CourseItemDetails extends Component {
     const {name, description, imageUrl} = courseDetailsList
 
     return (
-      <DetailedCourseContainer>
-        <CourseImageElement src={imageUrl} alt={name} />
-        <NameDescriptionContainer>
-          <CourseName>{name}</CourseName>
-          <Description>{description}</Description>
-        </NameDescriptionContainer>
-      </DetailedCourseContainer>
+      <div className="detailed-course-container">
+        <img className="course-image-element" src={imageUrl} alt={name} />
+        <div className="name-desc-container">
+          <h1 className="course-name">{name}</h1>
+          <p className="description">{description}</p>
+        </div>
+      </div>
     )
   }
 
   renderFailureView = () => (
-    <FailureViewContainer>
-      <FailureImageElement
+    <div className="failure-view-container">
+      <img
+        className="failure-image-element"
         src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
         alt="failure view"
       />
-      <FailureViewHeading>Oops! Something Went Wrong</FailureViewHeading>
-      <FailureViewDescription>
+      <h1 className="failure-heading">Oops! Something Went Wrong</h1>
+      <p className="failure-description">
         We cannot seem to find the page you are looking for .
-      </FailureViewDescription>
-      <RetryBtn type="button" onClick={this.onClickRetryBtn}>
+      </p>
+      <button
+        className="retry-btn"
+        type="button"
+        onClick={this.onClickRetryBtn}
+      >
         Retry
-      </RetryBtn>
-    </FailureViewContainer>
+      </button>
+    </div>
   )
 
   renderLoader = () => (
-    <LoaderContainer data-testid="loader">
+    <div className="loader-container" data-testid="loader">
       <Loader type="ThreeDots" color="#00BFFF" height={50} width={50} />
-    </LoaderContainer>
+    </div>
   )
 
   renderContent = () => {
@@ -116,9 +112,9 @@ class CourseItemDetails extends Component {
 
   render() {
     return (
-      <CourseItemDetailsContainer>
+      <div className="course-item-details-container">
         {this.renderContent()}
-      </CourseItemDetailsContainer>
+      </div>
     )
   }
 }

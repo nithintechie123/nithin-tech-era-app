@@ -2,18 +2,7 @@ import {Component} from 'react'
 
 import Loader from 'react-loader-spinner'
 
-import {
-  HomeContainer,
-  CoursesHeading,
-  HomeTechContainer,
-  TechItemsContainer,
-  LoaderContainer,
-  FailureViewContainer,
-  FailureImageElement,
-  FailureViewHeading,
-  FailureViewDescription,
-  RetryBtn,
-} from '../../styledComponents'
+import './index.css'
 
 import TechItem from '../TechItem'
 
@@ -60,35 +49,40 @@ class Home extends Component {
   }
 
   renderLoader = () => (
-    <LoaderContainer data-testid="loader">
+    <div className="loader-container" data-testid="loader">
       <Loader type="ThreeDots" color="#00BFFF" height={50} width={50} />
-    </LoaderContainer>
+    </div>
   )
 
   renderFailureView = () => (
-    <FailureViewContainer>
-      <FailureImageElement
+    <div className="failure-view-container">
+      <img
+        className="failure-image-element"
         src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
         alt="failure view"
       />
-      <FailureViewHeading>Oops! Something Went Wrong</FailureViewHeading>
-      <FailureViewDescription>
+      <h1 className="failure-heading">Oops! Something Went Wrong</h1>
+      <p className="failure-description">
         We cannot seem to find the page you are looking for .
-      </FailureViewDescription>
-      <RetryBtn type="button" onClick={this.onClickRetryBtn}>
+      </p>
+      <button
+        className="retry-btn"
+        type="button"
+        onClick={this.onClickRetryBtn}
+      >
         Retry
-      </RetryBtn>
-    </FailureViewContainer>
+      </button>
+    </div>
   )
 
   renderTechItem = () => {
     const {coursesList} = this.state
     return (
-      <TechItemsContainer>
+      <ul className="tech-items-container">
         {coursesList.map(eachItem => (
           <TechItem key={eachItem.id} eachTechItemDetails={eachItem} />
         ))}
-      </TechItemsContainer>
+      </ul>
     )
   }
 
@@ -109,10 +103,10 @@ class Home extends Component {
 
   render() {
     return (
-      <HomeContainer>
-        <CoursesHeading>Courses</CoursesHeading>
-        <HomeTechContainer>{this.renderContent()}</HomeTechContainer>
-      </HomeContainer>
+      <div className="home-container">
+        <h1 className="courses-heading">Courses</h1>
+        <div className="home-tech-container">{this.renderContent()}</div>
+      </div>
     )
   }
 }

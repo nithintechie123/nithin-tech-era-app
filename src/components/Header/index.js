@@ -1,16 +1,17 @@
 import {withRouter, Link} from 'react-router-dom'
 
-import {HeaderContainer, WebsiteLogo} from '../../styledComponents'
+import './index.css'
 
 const Header = () => (
-  <HeaderContainer>
+  <nav className="header-container">
     <Link to="/">
-      <WebsiteLogo
+      <img
+        className="website-logo"
         src="https://assets.ccbp.in/frontend/react-js/tech-era/website-logo-img.png"
         alt="website logo"
       />
     </Link>
-  </HeaderContainer>
+  </nav>
 )
 
 export default withRouter(Header)
