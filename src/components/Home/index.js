@@ -5,21 +5,34 @@ import Loader from 'react-loader-spinner'
 import {
   HomeContainer,
   CoursesHeading,
+  HomeTechContainer,
   TechItemsContainer,
   LoaderContainer,
+  FailureViewContainer,
+  FailureImageElement,
+  FailureViewHeading,
+  FailureViewDescription,
+  RetryBtn,
 } from '../../styledComponents'
 
 import TechItem from '../TechItem'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'INPROGRESS',
+}
+
 class Home extends Component {
-  state = {coursesList: [], isLoading: false}
+  state = {coursesList: [], apiStatus: apiStatusConstants.initial}
 
   componentDidMount = () => {
     this.getCoursesData()
   }
 
   getCoursesData = async () => {
-    this.setState({isLoading: true})
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const apiUrl = 'https://apis.ccbp.in/te/courses'
     const options = {method: 'GET'}
 
@@ -33,14 +46,33 @@ class Home extends Component {
         logoUrl: eachCourse.logo_url,
         name: eachCourse.name,
       }))
-      this.setState({coursesList: formattedData, isLoading: false})
+      this.setState({
+        coursesList: formattedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
   renderLoader = () => (
     <LoaderContainer data-testid="loader">
-      <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+      <Loader type="ThreeDots" color="#00BFFF" height={50} width={50} />
     </LoaderContainer>
+  )
+
+  renderFailureView = () => (
+    <FailureViewContainer>
+      <FailureImageElement
+        src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
+        alt="failure view"
+      />
+      <FailureViewHeading>Oops! Something Went Wrong</FailureViewHeading>
+      <FailureViewDescription>
+        We cannot seem to find the page you are looking for .
+      </FailureViewDescription>
+      <RetryBtn>Retry</RetryBtn>
+    </FailureViewContainer>
   )
 
   renderTechItem = () => {
@@ -54,12 +86,26 @@ class Home extends Component {
     )
   }
 
+  renderContent = () => {
+    const {apiStatus} = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return this.renderTechItem()
+      case apiStatusConstants.failure:
+        return this.renderFailureView()
+      case apiStatusConstants.inProgress:
+        return this.renderLoader()
+      default:
+        return null
+    }
+  }
+
   render() {
-    const {isLoading} = this.state
     return (
       <HomeContainer>
         <CoursesHeading>Courses</CoursesHeading>
-        {isLoading ? this.renderLoader() : this.renderTechItem()}
+        <HomeTechContainer>{this.renderContent()}</HomeTechContainer>
       </HomeContainer>
     )
   }

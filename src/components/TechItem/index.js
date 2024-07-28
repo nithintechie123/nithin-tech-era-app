@@ -1,3 +1,7 @@
+import {Link} from 'react-router-dom'
+
+import './index.css'
+
 import {
   CourseItemContainer,
   ImageElement,
@@ -6,13 +10,15 @@ import {
 
 const TechItem = props => {
   const {eachTechItemDetails} = props
-  const {name, logoUrl} = eachTechItemDetails
+  const {id, name, logoUrl} = eachTechItemDetails
 
   return (
-    <CourseItemContainer>
-      <ImageElement src={logoUrl} alt={name} />
-      <CourseName>{name}</CourseName>
-    </CourseItemContainer>
+    <Link to={`courses/${id}`} className="link-item">
+      <CourseItemContainer>
+        <ImageElement src={logoUrl} alt={name} />
+        <CourseName>{name}</CourseName>
+      </CourseItemContainer>
+    </Link>
   )
 }
 
